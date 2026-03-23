@@ -7,10 +7,12 @@ public class ShotPool : MonoBehaviour
 {
     public ObjectPool<GameObject> ShotObjPool;
     [SerializeField] GameObject ShotObj;
-    MonoBehaviour[] Scripts;
+    MonoBehaviour[] MoveScripts;
 
     [SerializeField] private int actionNum;  //使用中のオブジェクト数
     [SerializeField] private int poolNum;  //プールが持ってる全オブジェクト数
+
+    [SerializeField] Shot0_C _Shot0_C;
 
     void Start()
     {
@@ -50,7 +52,26 @@ public class ShotPool : MonoBehaviour
 
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            if (!_Shot0_C.isCoroutine)
+            {
+                _Shot0_C.CreateStart();
+            }
+            else
+            {
+                _Shot0_C.CreateEnd();
+            }
+        }
+    }
+
+    public void Shot0Get(Vector3 Pos, Quaternion Rotation)
+    {
+        GameObject Obj = ShotObjPool.Get();
+        Transform ObjTransform = Obj.transform;
+        ObjTransform.position = Pos;
+        ObjTransform.rotation = Rotation;
+        Obj.GetComponent<ShotObjManager>().Scripts[0].enabled = true;
     }
     
     void ResetScript(GameObject Obj)
