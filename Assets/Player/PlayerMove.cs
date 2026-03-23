@@ -8,11 +8,16 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] Rigidbody _Rigidbody;
     [SerializeField] Animator _Animator;
 
+    AnimatorStateInfo CurrentStateInfo;
+    AnimatorStateInfo NextStateInfo;
+
     private int idleHash = Animator.StringToHash("Idle");
     private int walkHash = Animator.StringToHash("Walk");
     private int jumpHash = Animator.StringToHash("Jump");
     private int jumpEndHash = Animator.StringToHash("JumpEnd");
 
+    const float IDLE_CROSS = 0.25f;
+    const float WALK_CROSS = 0.15f;
     const float JUMP_CROSS = 0.15f;
 
     const int JUMP_FORCE = 5;
@@ -24,16 +29,26 @@ public class PlayerMove : MonoBehaviour
 
     const float SPEED = 5.5f;
 
-    private bool canJump = true;
-    private bool canPreJump = false;
-    private bool preJump = false;
-    private bool fixedVelocityY = false;
+    public bool canJump = true;
+    public bool canPreJump = false;
+    public bool preJump = false;
+    public bool fixedVelocityY = false;
 
-    private bool isGround = true;
+    public bool isGround = true;
+
+    public bool isFalling { get; private set; } = false;
+    private float posLastY;
+    const float ERROR_FALL = 0.01f;
+
+    [SerializeField] Transform ModelTransform;
+
+    const float ROTATE_SPEED = 7.5f;
+    Quaternion RotationLast;
 
     void Start()
     {
-        
+        posLastY = _Transform.position.y;
+        RotationLast = ModelTransform.rotation;
     }
 
     void Update()
@@ -44,7 +59,28 @@ public class PlayerMove : MonoBehaviour
         _Transform.LookAt(TargetTransform);
         _Transform.rotation = Quaternion.Euler(0, _Transform.eulerAngles.y, 0);
 
-        if (canJump && isGround)
+        CurrentStateInfo = _Animator.GetCurrentAnimatorStateInfo(0);
+        NextStateInfo = _Animator.GetNextAnimatorStateInfo(0);
+
+        if (isGround && canJump)
+        {
+            if (moveX == 0 && moveZ == 0)
+            {
+                if (CurrentStateInfo.shortNameHash != idleHash && NextStateInfo.shortNameHash != idleHash)
+                {
+                    _Animator.CrossFade(idleHash, IDLE_CROSS);
+                }
+            }
+            else
+            {
+                if (CurrentStateInfo.shortNameHash != walkHash && NextStateInfo.shortNameHash != walkHash)
+                {
+                    _Animator.CrossFade(walkHash, WALK_CROSS);
+                }
+            }
+        }
+
+        if (canJump)
         {
             if(Input.GetKeyDown(KeyCode.Space) || preJump)
             {
@@ -62,6 +98,22 @@ public class PlayerMove : MonoBehaviour
                 preJump = true;
             }
         }
+
+        if (moveX == 0 && moveZ == 0)
+        {
+            ModelTransform.rotation = RotationLast;
+        }
+        else
+        {
+            float angle = Mathf.Atan2(moveX, moveZ) * Mathf.Rad2Deg;
+            ModelTransform.localRotation = Quaternion.Euler(0, angle, 0);
+            Quaternion RotationBase = ModelTransform.rotation;
+            ModelTransform.localRotation = Quaternion.Euler(0, angle, 0);
+            Quaternion RotationTarget = ModelTransform.rotation;
+            ModelTransform.rotation = Quaternion.RotateTowards(RotationBase, RotationTarget, ROTATE_SPEED * Time.deltaTime);
+
+            RotationLast = ModelTransform.rotation;
+        }
     }
 
     private void FixedUpdate()
@@ -72,6 +124,10 @@ public class PlayerMove : MonoBehaviour
         }
 
         _Rigidbody.MovePosition(_Transform.position + SPEED * Time.fixedDeltaTime * (_Transform.right * moveX + _Transform.forward * moveZ));
+
+        float posDeltaY = _Rigidbody.position.y - posLastY;
+        isFalling = (posDeltaY < 0 && posDeltaY >= ERROR_FALL);
+        posLastY = _Rigidbody.position.y;
     }
 
     public void Jump()
@@ -83,13 +139,10 @@ public class PlayerMove : MonoBehaviour
     public void JumpEnd()
     {
         canJump = true;
-        canPreJump = false;
-        preJump = false;
     }
 
     public void PreJump()
     {
         canPreJump = true;
-        preJump = false;
     }
 }

@@ -10,6 +10,10 @@ public class Shot0_C : MonoBehaviour
 
     public bool isCoroutine = false;
     const float TIME = 0.1f;
+    const int CREATE_NUM = 5;
+
+    const float ROTATION_Y_MIN = -40f;
+    const float ROTATION_Y_MAX = 60f;
 
     void Start()
     {
@@ -39,7 +43,10 @@ public class Shot0_C : MonoBehaviour
         {
             yield return new WaitForSeconds(TIME);
 
-            _ShotPool.Shot0Get(_Transform.position, Quaternion.Euler(Random.Range(0f, 360f), Random.Range(0f, 360f), Random.Range(0f, 360f)));
+            for (int i = 0; i < CREATE_NUM; i++)
+            {
+                _ShotPool.Shot0Get(_Transform.position, Quaternion.Euler(Random.Range(0f, 360f), Random.Range(ROTATION_Y_MIN, ROTATION_Y_MAX), 0));
+            }
         }
     }
 }

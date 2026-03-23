@@ -14462,14 +14462,6 @@ AnimationClip:
   m_HasGenericRootTransform: 1
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.125
-    functionName: PreJump
-    data: 
-    objectReferenceParameter: {fileID: 11500000, guid: 1f9eb01ae3882b348bdcb25ce20e3edf,
-      type: 3}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
   - time: 0.20833333
     functionName: JumpEnd
     data: 
