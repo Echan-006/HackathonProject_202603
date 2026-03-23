@@ -11,7 +11,8 @@ public class ToCamera : MonoBehaviour
     const float POS_X_MAX = 3.5f;
 
     const int POS_Y = 1;
-    const int POS_Z = 6;
+    const int POS_Z = 3;
+
     void Start()
     {
         
@@ -21,7 +22,11 @@ public class ToCamera : MonoBehaviour
     {
         posX += POS_X_SPEED * -Input.GetAxis("Mouse X") * Time.deltaTime;
         posX = Mathf.Clamp(posX, -POS_X_MAX, POS_X_MAX);
-
         _Transform.localPosition = new Vector3(posX, POS_Y, POS_Z);
+    }
+
+    private void FixedUpdate()
+    {
+        //_Transform.localPosition = new Vector3(posX, POS_Y, POS_Z);
     }
 }

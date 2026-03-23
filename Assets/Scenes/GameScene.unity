@@ -956,7 +956,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PositionMode: 0
   m_RotationMode: 0
-  m_UpdateMethod: 2
+  m_UpdateMethod: 1
   m_Targets:
   - target: {fileID: 1254968086}
     weight: 1

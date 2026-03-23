@@ -25,4 +25,9 @@ public class PlayerAnimEvent : MonoBehaviour
     {
         _PlayerMove.JumpEnd();
     }
+
+    public void PreJump()
+    {
+        _PlayerMove.PreJump();
+    }
 }

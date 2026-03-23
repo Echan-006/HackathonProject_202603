@@ -22,10 +22,14 @@ public class PlayerMove : MonoBehaviour
     private float moveX;
     private float moveZ;
 
-    const float SPEED = 10f;
+    const float SPEED = 5.5f;
 
     private bool canJump = true;
+    private bool canPreJump = false;
+    private bool preJump = false;
     private bool fixedVelocityY = false;
+
+    private bool isGround = true;
 
     void Start()
     {
@@ -40,11 +44,23 @@ public class PlayerMove : MonoBehaviour
         _Transform.LookAt(TargetTransform);
         _Transform.rotation = Quaternion.Euler(0, _Transform.eulerAngles.y, 0);
 
-        if (Input.GetKeyDown(KeyCode.Space) && canJump)
+        if (canJump && isGround)
         {
-            _Animator.CrossFade(jumpHash, JUMP_CROSS);
-            canJump = false;
-            fixedVelocityY = true;
+            if(Input.GetKeyDown(KeyCode.Space) || preJump)
+            {
+                _Animator.CrossFade(jumpHash, JUMP_CROSS);
+                canJump = false;
+                canPreJump = false;
+                preJump = false;
+                fixedVelocityY = true;
+            }
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Space) && canPreJump)
+            {
+                preJump = true;
+            }
         }
     }
 
@@ -67,5 +83,13 @@ public class PlayerMove : MonoBehaviour
     public void JumpEnd()
     {
         canJump = true;
+        canPreJump = false;
+        preJump = false;
+    }
+
+    public void PreJump()
+    {
+        canPreJump = true;
+        preJump = false;
     }
 }
