@@ -10,7 +10,7 @@ public class Shot0_C : MonoBehaviour
 
     public bool isCoroutine = false;
     const float TIME = 0.1f;
-    const int CREATE_NUM = 5;
+    const int CREATE_NUM = 2;
 
     const float ROTATION_Y_MIN = -40f;
     const float ROTATION_Y_MAX = 60f;
@@ -22,7 +22,17 @@ public class Shot0_C : MonoBehaviour
 
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            if (!isCoroutine)
+            {
+                CreateStart();
+            }
+            else
+            {
+                CreateEnd();
+            }
+        }
     }
 
     public void CreateStart()
@@ -45,7 +55,14 @@ public class Shot0_C : MonoBehaviour
 
             for (int i = 0; i < CREATE_NUM; i++)
             {
-                _ShotPool.Shot0Get(_Transform.position, Quaternion.Euler(Random.Range(0f, 360f), Random.Range(ROTATION_Y_MIN, ROTATION_Y_MAX), 0));
+                //_ShotPool.Shot0Get(_Transform.position, Quaternion.Euler(Random.Range(0f, 360f), Random.Range(ROTATION_Y_MIN, ROTATION_Y_MAX), 0));
+                GameObject Obj = _ShotPool.ShotObjPool.Get();
+                ShotParent Obj_ShotParent = Obj.GetComponent<ShotParent>();
+                Transform ObjTransform = Obj_ShotParent.Objects[0].transform;
+                ObjTransform.position = _Transform.position;
+                ObjTransform.rotation = Quaternion.Euler(Random.Range(0f, 360f), Random.Range(ROTATION_Y_MIN, ROTATION_Y_MAX), 0);
+                //Obj.GetComponent<ShotObjManager>().Scripts[0].enabled = true;
+                Obj_ShotParent.Objects[0].SetActive(true);
             }
         }
     }

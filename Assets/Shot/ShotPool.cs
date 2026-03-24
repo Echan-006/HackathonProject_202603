@@ -7,7 +7,7 @@ public class ShotPool : MonoBehaviour
 {
     public ObjectPool<GameObject> ShotObjPool;
     [SerializeField] GameObject ShotObj;
-    MonoBehaviour[] MoveScripts;
+    //MonoBehaviour[] MoveScripts;
 
     [SerializeField] PlayerMove _PlayerMove;
 
@@ -23,27 +23,31 @@ public class ShotPool : MonoBehaviour
                 createFunc: () =>
                 {
                     GameObject Obj = Instantiate(ShotObj);
-                    ShotObjManager _ShotObjManager = Obj.GetComponent<ShotObjManager>();
-                    _ShotObjManager._ShotPool = this;
-                    _ShotObjManager._PlayerMove = _PlayerMove;
+                    ShotParent _ShotParent = Obj.GetComponent<ShotParent>();
+                    _ShotParent._ShotPool = this;
+                    _ShotParent._PlayerMove = _PlayerMove;
+                    foreach (GameObject Obj_ShotObjManager in _ShotParent.Objects)
+                    {
+                        Obj_ShotObjManager.SetActive(false);
+                    }
                     poolNum++;
                     return Obj;
                 },
                 actionOnGet: Obj =>
                 {
-                    ResetScript(Obj);
+                    ResetObj(Obj);
                     actionNum++;
                     Obj.SetActive(true);
                 },
                 actionOnRelease: Obj =>
                 {
-                    ResetScript(Obj);
+                    ResetObj(Obj);
                     actionNum--;
                     Obj.SetActive(false);
                 },
                 actionOnDestroy: Obj =>
                 {
-                    ResetScript(Obj);
+                    ResetObj(Obj);
                     poolNum--;
                     actionNum--;
                     Destroy(Obj);
@@ -56,34 +60,39 @@ public class ShotPool : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            if (!_Shot0_C.isCoroutine)
-            {
-                _Shot0_C.CreateStart();
-            }
-            else
-            {
-                _Shot0_C.CreateEnd();
-            }
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha0))
+        //{
+        //    if (!_Shot0_C.isCoroutine)
+        //    {
+        //        _Shot0_C.CreateStart();
+        //    }
+        //    else
+        //    {
+        //        _Shot0_C.CreateEnd();
+        //    }
+        //}
     }
 
-    public void Shot0Get(Vector3 Pos, Quaternion Rotation)
-    {
-        GameObject Obj = ShotObjPool.Get();
-        Transform ObjTransform = Obj.transform;
-        ObjTransform.position = Pos;
-        ObjTransform.rotation = Rotation;
-        Obj.GetComponent<ShotObjManager>().Scripts[0].enabled = true;
-    }
+    //public void Shot0Get(Vector3 Pos, Quaternion Rotation)
+    //{
+    //    GameObject Obj = ShotObjPool.Get();
+    //    Transform ObjTransform = Obj.transform;
+    //    ObjTransform.position = Pos;
+    //    ObjTransform.rotation = Rotation;
+    //    //Obj.GetComponent<ShotObjManager>().Scripts[0].enabled = true;
+    //    Obj.GetComponent<ShotObjManager>().Objects[0].SetActive(true);
+    //}
     
-    void ResetScript(GameObject Obj)
+    void ResetObj(GameObject Obj)
     {
-        ShotObjManager ObjManager = Obj.GetComponent<ShotObjManager>();
-        foreach (MonoBehaviour Script in ObjManager.Scripts)
+        ShotParent _ShotParent = Obj.GetComponent<ShotParent>();
+        foreach (GameObject Obj_ShotParent in _ShotParent.Objects)
         {
-            Script.enabled = false;
+            Obj_ShotParent.SetActive(false);
         }
+        //foreach (MonoBehaviour Script in ObjManager.Scripts)
+        //{
+        //    Script.enabled = false;
+        //}
     }
 }

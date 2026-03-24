@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class ShotObjManager : MonoBehaviour
 {
-    public ShotPool _ShotPool;
-    public MonoBehaviour[] Scripts;
+    //public ShotPool _ShotPool;
+    ////public MonoBehaviour[] Scripts;
+    //public GameObject[] Objects;
 
-    public PlayerMove _PlayerMove;
-
+    //public PlayerMove _PlayerMove;
+    [SerializeField] ShotParent _ShotParent;
     [SerializeField] Transform _Transform;
 
     const int Y_MIN = -1;
@@ -45,20 +46,15 @@ public class ShotObjManager : MonoBehaviour
 
         if (releaseValue >= 1)
         {
-            _ShotPool.ShotObjPool.Release(this.gameObject);
+            _ShotParent._ShotPool.ShotObjPool.Release(_ShotParent.gameObject);
         }
 
         _Transform.localScale = new Vector3(scaleValue, scaleValue, scaleValue);
     }
 
-    public void ReleaseObj()
-    {
-        _ShotPool.ShotObjPool.Release(this.gameObject);
-    }
-
     private void OnTriggerEnter(Collider other)
     {
-        _PlayerMove.Damage();
-        _ShotPool.ShotObjPool.Release(this.gameObject);
+        _ShotParent._PlayerMove.Damage();
+        _ShotParent._ShotPool.ShotObjPool.Release(_ShotParent.gameObject);
     }
 }
