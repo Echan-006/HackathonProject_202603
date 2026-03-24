@@ -9,7 +9,7 @@ public class AttackPool : MonoBehaviour
     [SerializeField] GameObject AttackObj;
     [SerializeField] Transform Enemy;
 
-    private int num;
+    [SerializeField] private int num;
     const int NUM_MAX = 15;
 
     const float TIME_MIN = 2.5f;
@@ -20,7 +20,7 @@ public class AttackPool : MonoBehaviour
     const float DISTANCE_POW = 2.25f;
 
     const float Y_MIN = 0.5f;
-    const float Y_MAX = 13.5f;
+    const float Y_MAX = 11.5f;
     const float Y_POW = 1.5f;
 
     void Start()
@@ -37,18 +37,18 @@ public class AttackPool : MonoBehaviour
                 },
                 actionOnGet: Obj =>
                 {
-                    Obj.SetActive(true);
                     num++;
+                    Obj.SetActive(true);
                 },
                 actionOnRelease: Obj =>
                 {
-                    Obj.SetActive(false);
                     num--;
+                    Obj.SetActive(false);
                 },
                 actionOnDestroy: Obj =>
                 {
-                    Destroy(Obj);
                     num--;
+                    Destroy(Obj);
                 },
                 collectionCheck: true,
                 defaultCapacity: NUM_MAX,

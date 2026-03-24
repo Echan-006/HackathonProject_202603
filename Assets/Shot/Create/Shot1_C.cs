@@ -31,20 +31,20 @@ public class Shot1_C : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            if (!isCoroutine)
-            {
-                CreateStart();
-            }
-            else
-            {
-                CreateEnd();
-            }
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha1))
+        //{
+        //    if (!isCoroutine)
+        //    {
+        //        CreateStart();
+        //    }
+        //    else
+        //    {
+        //        CreateEnd();
+        //    }
+        //}
     }
 
-    void CreateStart()
+    public void CreateStart()
     {
         //float deltaX = PlayerTransform.position.x - _Transform.position.x;
         //float deltaZ = PlayerTransform.position.z - _Transform.position.z;
@@ -59,7 +59,7 @@ public class Shot1_C : MonoBehaviour
         StartCoroutine(ShotCoroutine());
     }
 
-    void CreateEnd()
+    public void CreateEnd()
     {
         isCoroutine = false;
     }

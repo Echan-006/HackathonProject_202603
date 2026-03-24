@@ -22,17 +22,17 @@ public class Shot0_C : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            if (!isCoroutine)
-            {
-                CreateStart();
-            }
-            else
-            {
-                CreateEnd();
-            }
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha0))
+        //{
+        //    if (!isCoroutine)
+        //    {
+        //        CreateStart();
+        //    }
+        //    else
+        //    {
+        //        CreateEnd();
+        //    }
+        //}
     }
 
     public void CreateStart()

@@ -103,7 +103,7 @@ public class AttackScript : MonoBehaviour
             if (other.gameObject.CompareTag("Enemy"))
             {
                 Enemy.gameObject.GetComponent<Enemy>().Damage();
-                this.gameObject.SetActive(false);
+                _AttackPool.AttackObjPool.Release(this.gameObject);
             }
         }
     }

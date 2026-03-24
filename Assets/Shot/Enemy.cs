@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -8,7 +9,21 @@ public class Enemy : MonoBehaviour
     [SerializeField] Transform _Transform;
     [SerializeField] ParticleSystem _ParticleSystem;
 
-    private int life;
+    [SerializeField] Shot0_C _Shot0_C;
+    [SerializeField] Shot1_C _Shot1_C;
+    [SerializeField] Shot2_C _Shot2_C;
+    [SerializeField] Shot3_C _Shot3_C;
+
+    private bool[] once = { true, true, true, true };
+
+    const int LIFE_1 = 12;
+    const int LIFE_2 = 8;
+    const int LIFE_3 = 4;
+
+    private bool onceEnd = true;
+
+    [SerializeField] private int life = 16;
+    const int LIFE_MAX = 16;
 
     [SerializeField] GameObject DamageObj;
     public ObjectPool<GameObject> DamagePool;
@@ -49,6 +64,51 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        if (once[0])
+        {
+            if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0 || Input.GetKeyDown(KeyCode.Space))
+            {
+                _Shot0_C.CreateStart();
+                once[0] = false;
+            }
+        }
+        if (once[1])
+        {
+            if (life <= LIFE_1)
+            {
+                _Shot1_C.CreateStart();
+                once[1] = false;
+            }
+        }
+        if (once[2])
+        {
+            if (life <= LIFE_2)
+            {
+                _Shot2_C.CreateStart();
+                once[2] = false;
+            }
+        }
+        if (once[3])
+        {
+            if (life <= LIFE_3)
+            {
+                _Shot3_C.CreateStart();
+                once[3] = false;
+            }
+        }
+
+        if (life <= 0)
+        {
+            if (onceEnd)
+            {
+                _Shot0_C.CreateEnd();
+                _Shot1_C.CreateEnd();
+                _Shot2_C.CreateEnd();
+                _Shot3_C.CreateEnd();
+                onceEnd = false;
+            }
+        }
+
         noiseValue += NOISE_SPEED * Time.deltaTime;
         if (distanceValue > 0)
         {
@@ -71,6 +131,8 @@ public class Enemy : MonoBehaviour
 
     public void Damage()
     {
+        if (life <= 0) return;
+
         life--;
         for (int i = 0; i < DAMAGE_NUM; i++)
         {
