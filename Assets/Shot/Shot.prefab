@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1922780803773153323}
   - component: {fileID: 1779972213273529294}
   - component: {fileID: 8702826722552378976}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SparkleOrbBlue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 15, y: 15, z: 15}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6470337121457970683}
@@ -4923,7 +4923,8 @@ GameObject:
   - component: {fileID: 2506740703425858889}
   - component: {fileID: 4263787402932931465}
   - component: {fileID: -3034747114225131245}
-  m_Layer: 0
+  - component: {fileID: 7763539664604666171}
+  m_Layer: 10
   m_Name: Shot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4940,7 +4941,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1922780803773153323}
@@ -4975,6 +4976,31 @@ MonoBehaviour:
   _ShotPool: {fileID: 0}
   Scripts:
   - {fileID: 4263787402932931465}
+  _PlayerMove: {fileID: 0}
+  _ShotEffectPool: {fileID: 0}
+  _Transform: {fileID: 2506740703425858889}
+  isRelease: 0
+--- !u!135 &7763539664604666171
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2863706515576119369}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7717561095107591613
 GameObject:
   m_ObjectHideFlags: 0
@@ -4986,7 +5012,7 @@ GameObject:
   - component: {fileID: 4740185290400011452}
   - component: {fileID: 736179159913858341}
   - component: {fileID: 2364450546129940844}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Sparkle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9913,7 +9939,7 @@ GameObject:
   - component: {fileID: 6470337121457970683}
   - component: {fileID: 4123285966809461200}
   - component: {fileID: 2037248285319490995}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14809,7 +14835,7 @@ GameObject:
   - component: {fileID: 6982114617721343386}
   - component: {fileID: 715814094789542991}
   - component: {fileID: 2786104051529222285}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SphereGlow
   m_TagString: Untagged
   m_Icon: {fileID: 0}

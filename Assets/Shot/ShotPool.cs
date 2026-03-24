@@ -9,6 +9,8 @@ public class ShotPool : MonoBehaviour
     [SerializeField] GameObject ShotObj;
     MonoBehaviour[] MoveScripts;
 
+    [SerializeField] PlayerMove _PlayerMove;
+
     [SerializeField] private int actionNum;  //使用中のオブジェクト数
     [SerializeField] private int poolNum;  //プールが持ってる全オブジェクト数
 
@@ -21,7 +23,9 @@ public class ShotPool : MonoBehaviour
                 createFunc: () =>
                 {
                     GameObject Obj = Instantiate(ShotObj);
-                    Obj.GetComponent<ShotObjManager>()._ShotPool = this;
+                    ShotObjManager _ShotObjManager = Obj.GetComponent<ShotObjManager>();
+                    _ShotObjManager._ShotPool = this;
+                    _ShotObjManager._PlayerMove = _PlayerMove;
                     poolNum++;
                     return Obj;
                 },

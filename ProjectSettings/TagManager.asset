@@ -15,8 +15,8 @@ TagManager:
   - Ground
   - OnlyGround
   - WallCollider
-  - 
-  - 
+  - OnlyShot
+  - Shot
   - 
   - 
   - 
