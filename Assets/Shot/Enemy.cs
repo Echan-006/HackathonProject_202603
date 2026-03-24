@@ -20,7 +20,7 @@ public class Enemy : MonoBehaviour
     const int NOISE_X_BASE = 0;
     const int NOISE_Y_BASE = 100;
     const int NOISE_Z_BASE = 200;
-    const int DISTANCE_MAX = 15;
+    const int DISTANCE_MAX = 10;
     private float distanceValue = 0;
     const float DISTANCE_TIME = 0.5f;
 
@@ -67,11 +67,6 @@ public class Enemy : MonoBehaviour
         ModelTransform.localPosition = Mathf.Lerp(0, DISTANCE_MAX, distanceValue) * new Vector3(Mathf.PerlinNoise1D(NOISE_X_BASE + noiseValue) - 0.5f,
                                                                                                 Mathf.PerlinNoise1D(NOISE_Y_BASE + noiseValue) - 0.5f,
                                                                                                 Mathf.PerlinNoise1D(NOISE_Z_BASE + noiseValue) - 0.5f);
-
-        if (Input.GetKeyDown(KeyCode.RightShift))
-        {
-            Damage();
-        }
     }
 
     public void Damage()

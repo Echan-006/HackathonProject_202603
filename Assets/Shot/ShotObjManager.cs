@@ -13,7 +13,7 @@ public class ShotObjManager : MonoBehaviour
     [SerializeField] Transform _Transform;
 
     const int Y_MIN = -1;
-    const int Y_MAX = 26;
+    const int Y_MAX = 40;
     const int X_Z_MAX = 51;
 
     [SerializeField] private bool isRelease = false;
@@ -54,6 +54,8 @@ public class ShotObjManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!other.gameObject.CompareTag("PlayerToDamage")) return;
+
         _ShotParent._PlayerMove.Damage();
         _ShotParent._ShotPool.ShotObjPool.Release(_ShotParent.gameObject);
     }

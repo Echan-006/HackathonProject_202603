@@ -17,7 +17,7 @@ public class AttackPool : MonoBehaviour
 
     const float DISTANCE_MIN = 10;
     const float DISTANCE_MAX = 25;
-    const float DISTANCE_POW = 2.5f;
+    const float DISTANCE_POW = 1.5f;
 
     const float Y_MIN = 0.5f;
     const float Y_MAX = 13.5f;

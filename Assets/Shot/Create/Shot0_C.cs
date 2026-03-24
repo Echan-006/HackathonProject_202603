@@ -44,7 +44,6 @@ public class Shot0_C : MonoBehaviour
     public void CreateEnd()
     {
         isCoroutine = false;
-        StopCoroutine(ShotCoroutine());
     }
 
     IEnumerator ShotCoroutine()

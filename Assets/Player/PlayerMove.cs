@@ -2,6 +2,7 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -68,11 +69,15 @@ public class PlayerMove : MonoBehaviour
     public float damagePerformanceTime { get; private set; } = 0;
     const float DAMAGE_PERFORMANCE_TIME_MAX = 0.5f;
 
+    private bool canDamage = true;
+    const float DAMAGE_WAIT = 0.75f;
+
     void Start()
     {
         life = lifeMax;
         isAttacked = false;
         _Rigidbody.useGravity = true;
+        canDamage = true;
 
         posLastY = _Transform.position.y;
         RotationLast = ModelTransform.rotation;
@@ -214,11 +219,6 @@ public class PlayerMove : MonoBehaviour
 
             RotationLast = ModelTransform.rotation;
         }
-
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            Damage();
-        }
     }
 
     private void FixedUpdate()
@@ -265,6 +265,10 @@ public class PlayerMove : MonoBehaviour
     public void Damage()
     {
         if (life <= 0) return;
+        if (!canDamage) return;
+
+        canDamage = false;
+        StartCoroutine(DamageCoroutine());
 
         life--;
         for (int i = 0; i < DAMAGE_NUM; i++)
@@ -280,5 +284,12 @@ public class PlayerMove : MonoBehaviour
             _Animator.speed = 0;
         }
         isAttacked = true;
+    }
+
+    IEnumerator DamageCoroutine()
+    {
+        yield return new WaitForSeconds(DAMAGE_WAIT);
+
+        canDamage = true;
     }
 }
