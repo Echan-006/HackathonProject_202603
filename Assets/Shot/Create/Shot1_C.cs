@@ -17,7 +17,7 @@ public class Shot1_C : MonoBehaviour
     private bool isCoroutine;
 
     const float TIME_SHORT = 0.05f;
-    const float TIME_LONG = 3.5f;
+    const float TIME_LONG = 8.75f;
 
     private int[] distance = { 30, 24, 18, 12 };
     const int HALF_CIRCLE_NUM = 10;

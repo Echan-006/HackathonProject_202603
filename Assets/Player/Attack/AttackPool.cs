@@ -12,12 +12,12 @@ public class AttackPool : MonoBehaviour
     private int num;
     const int NUM_MAX = 15;
 
-    const int TIME_MIN = 5;
-    const int TIME_MAX = 10;
+    const float TIME_MIN = 2.5f;
+    const float TIME_MAX = 7.5f;
 
     const float DISTANCE_MIN = 10;
     const float DISTANCE_MAX = 25;
-    const float DISTANCE_POW = 1.5f;
+    const float DISTANCE_POW = 2.25f;
 
     const float Y_MIN = 0.5f;
     const float Y_MAX = 13.5f;
