@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -22,7 +21,7 @@ public class Enemy : MonoBehaviour
 
     private bool onceEnd = true;
 
-    [SerializeField] private int life = 16;
+    public int life { get; private set; } = 16;
     const int LIFE_MAX = 16;
 
     [SerializeField] GameObject DamageObj;
@@ -131,9 +130,11 @@ public class Enemy : MonoBehaviour
 
     public void Damage()
     {
-        if (life <= 0) return;
+        if (life > 0)
+        {
+            life--;
+        }
 
-        life--;
         for (int i = 0; i < DAMAGE_NUM; i++)
         {
             DamagePool.Get();
