@@ -23,6 +23,8 @@ public class AttackPool : MonoBehaviour
     const float Y_MAX = 11.5f;
     const float Y_POW = 1.5f;
 
+    private bool once = true;
+
     void Start()
     {
         AttackObjPool = new ObjectPool<GameObject>
@@ -54,13 +56,18 @@ public class AttackPool : MonoBehaviour
                 defaultCapacity: NUM_MAX,
                 maxSize: 20
             );
-
-        StartCoroutine(CreateCoroutine());
     }
 
     void Update()
     {
-        
+        if (once)
+        {
+            if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0 || Input.GetKeyDown(KeyCode.Space))
+            {
+                StartCoroutine(CreateCoroutine());
+                once = false;
+            }
+        }
     }
 
     IEnumerator CreateCoroutine()

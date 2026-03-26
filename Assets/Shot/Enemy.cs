@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
     private bool onceEnd = true;
 
     public int life { get; private set; } = 16;
-    const int LIFE_MAX = 16;
+    public int lifeMax { get; private set; } = 16;
 
     [SerializeField] GameObject DamageObj;
     public ObjectPool<GameObject> DamagePool;
